@@ -1,0 +1,192 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* the nav is fixed and translucent, so anchored sections need headroom */
+    scroll-padding-top: 6rem;
+  }
+
+  body {
+    @apply bg-cream font-sans text-ink antialiased;
+  }
+
+  ::selection {
+    @apply bg-navy text-cream;
+  }
+}
+
+@layer components {
+  /* ── Shell ─────────────────────────────────────────────────────────
+     Every section shares the same gutter so the wordmark, the eyebrows
+     and the body copy all sit on one left rule, as they do in the comps. */
+  .shell {
+    @apply mx-auto w-full max-w-shell px-6 sm:px-8 lg:px-12 xl:px-16;
+  }
+
+  /* ── Typography ────────────────────────────────────────────────────
+     Sizes are the comp measurements (2000px-wide export) divided back to
+     a 1440px artboard, then expressed as clamps so they hold up either side
+     of that width. */
+  .t-hero {
+    @apply font-display font-medium leading-[0.98] tracking-[-0.01em];
+    font-size: clamp(2.75rem, 6.9vw, 6.25rem);
+  }
+
+  .t-section {
+    @apply font-display font-medium leading-[1.08] tracking-[-0.005em];
+    font-size: clamp(2rem, 3.75vw, 3.375rem);
+  }
+
+  /* In the comps the headline is wider than the body column beneath it and
+     runs out over the feathered edge of the photograph. Copy columns carry
+     `relative z-10` so the headline stays on top of the image. */
+  .h-bleed {
+    max-width: none;
+  }
+
+  @media (min-width: 1024px) {
+    .h-bleed {
+      width: 42rem;
+    }
+  }
+
+  .t-quote {
+    @apply font-display font-medium leading-[1.25];
+    font-size: clamp(1.375rem, 2.2vw, 2rem);
+  }
+
+  .t-card-title {
+    @apply font-display font-semibold leading-[1.15];
+    font-size: clamp(1.125rem, 1.5vw, 1.5rem);
+  }
+
+  .t-body {
+    @apply font-sans font-normal leading-[1.42];
+    font-size: clamp(0.9375rem, 1.25vw, 1.125rem);
+  }
+
+  .t-eyebrow {
+    @apply font-sans font-medium uppercase text-gold;
+    font-size: clamp(0.8125rem, 1.05vw, 1.0625rem);
+    letter-spacing: 0.07em;
+  }
+
+  .t-nav {
+    @apply font-sans font-medium;
+    font-size: clamp(0.8125rem, 1.1vw, 1.0625rem);
+  }
+
+  /* ── Rules ─────────────────────────────────────────────────────────
+     The short gold rule that sits under every wordmark and headline. */
+  .rule-gold {
+    @apply block h-px w-14 bg-gold-soft;
+  }
+
+  /* ── Buttons ───────────────────────────────────────────────────────
+     Comp: 276 x 50 at 1440, 6px radius, navy #012C56 fill, gold uppercase
+     label tracked out, arrow pinned to the right of the label. */
+  .btn-navy {
+    @apply inline-flex items-center gap-5 rounded-[10px] bg-navy-deep font-sans font-semibold uppercase
+           text-gold-bright transition-all duration-300 ease-soft
+           hover:bg-navy-soft hover:text-cream focus-visible:outline focus-visible:outline-2
+           focus-visible:outline-offset-2 focus-visible:outline-gold;
+    font-size: clamp(0.75rem, 0.95vw, 0.9375rem);
+    letter-spacing: 0.085em;
+    padding: clamp(0.85rem, 1.15vw, 1.05rem) clamp(1.4rem, 2vw, 1.9rem);
+  }
+
+  /* The hero comp sets its button label — and its nav — in the display serif;
+     every scrolled comp uses the sans. Both are reproduced as drawn. */
+  .btn-serif {
+    @apply font-display font-medium;
+    font-size: clamp(0.875rem, 1.15vw, 1.125rem);
+    letter-spacing: 0.11em;
+  }
+
+  .btn-navy .arrow {
+    @apply inline-block transition-transform duration-300 ease-soft;
+  }
+
+  .btn-navy:hover .arrow {
+    @apply translate-x-1;
+  }
+
+  /* Text link with a trailing arrow, used across the Bhai Se Judo columns. */
+  .link-gold {
+    @apply inline-flex items-center gap-2 whitespace-nowrap font-sans font-semibold text-gold
+           transition-colors duration-200 hover:text-navy;
+    font-size: clamp(0.8125rem, 1.05vw, 1rem);
+  }
+
+  .link-gold .arrow {
+    @apply inline-block transition-transform duration-300 ease-soft;
+  }
+
+  .link-gold:hover .arrow {
+    @apply translate-x-1;
+  }
+
+  /* ── Cards ─────────────────────────────────────────────────────────
+     The photo-over-caption cards in Arogya Doot, Apne Log and Samvaad. */
+  .photo-card {
+    @apply overflow-hidden rounded-xl bg-card ring-1 ring-gold-pale/60
+           transition-all duration-500 ease-soft hover:ring-gold-soft;
+  }
+}
+
+@layer utilities {
+  /* Feathers the right-hand photograph into the cream ground - the comps
+     dissolve every hero image into the page rather than cropping it. */
+  .fade-left {
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 26%);
+    mask-image: linear-gradient(to right, transparent 0%, #000 26%);
+  }
+
+  .fade-left-soft {
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 38%);
+    mask-image: linear-gradient(to right, transparent 0%, #000 38%);
+  }
+
+  /* Same idea, but dissolving on two edges at once. */
+  .fade-left-bottom {
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 30%),
+      linear-gradient(to top, transparent 0%, #000 30%);
+    -webkit-mask-composite: source-in;
+    mask-image: linear-gradient(to right, transparent 0%, #000 30%),
+      linear-gradient(to top, transparent 0%, #000 30%);
+    mask-composite: intersect;
+  }
+
+  .fade-bottom {
+    -webkit-mask-image: linear-gradient(to top, transparent 0%, #000 16%);
+    mask-image: linear-gradient(to top, transparent 0%, #000 16%);
+  }
+
+  /* Reveal-on-scroll. Kept in CSS so the markup stays server-rendered. */
+  .reveal {
+    opacity: 0;
+    transform: translateY(26px);
+    transition: opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
