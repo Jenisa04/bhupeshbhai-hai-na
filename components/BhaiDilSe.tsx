@@ -72,7 +72,7 @@ export default function BhaiDilSe() {
                   alt={t.alt}
                   fill
                   sizes="(min-width: 1024px) 22vw, 31vw"
-                  className="object-cover transition-transform duration-700 ease-soft group-hover:scale-[1.04]"
+                  className="object-cover object-top transition-transform duration-700 ease-soft group-hover:scale-[1.04]"
                 />
               </Reveal>
             ))}
